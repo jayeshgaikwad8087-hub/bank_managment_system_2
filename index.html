@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DSG Enterprise Workspace</title>
+    <meta name="description" content="DSG 50 module Flask workspace">
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --panel: #fff;
+            --text: #18202a;
+            --muted: #667085;
+            --line: #e4e7ec;
+            --primary: #2563eb;
+            --good: #16a34a;
+            --warn: #d97706;
+            --danger: #dc2626
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, Segoe UI, Arial;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        .top {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #fffffff2;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            padding: 11px 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center
+        }
+
+        .brand {
+            font-weight: 800;
+            display: flex;
+            gap: 9px;
+            align-items: center
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 900
+        }
+
+        .search {
+            flex: 1;
+            max-width: 650px
+        }
+
+        .search input {
+            width: 100%;
+            padding: 10px 13px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #f8fafc
+        }
+
+        .user {
+            margin-left: auto;
+            display: flex;
+            gap: 9px;
+            align-items: center
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-weight: 800
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 245px 1fr
+        }
+
+        .side {
+            position: sticky;
+            top: 63px;
+            height: calc(100vh - 63px);
+            overflow: auto;
+            background: #101828;
+            color: #d0d5dd;
+            padding: 15px 11px
+        }
+
+        .side small {
+            color: #98a2b3;
+            text-transform: uppercase;
+            padding: 8px 10px;
+            display: block
+        }
+
+        .nav {
+            display: grid;
+            gap: 3px
+        }
+
+        .nav button {
+            background: transparent;
+            color: #d0d5dd;
+            border: 0;
+            text-align: left;
+            padding: 9px;
+            border-radius: 9px
+        }
+
+        .nav button:hover,
+        .nav button.active {
+            background: #1d2939;
+            color: #fff
+        }
+
+        .main {
+            padding: 25px;
+            max-width: 1700px;
+            width: 100%;
+            margin: auto
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #172554, #312e81);
+            color: white;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 22px
+        }
+
+        .hero h1 {
+            margin: 0 0 7px;
+            font-size: clamp(25px, 4vw, 42px)
+        }
+
+        .hero p {
+            margin: 0;
+            color: #dbeafe
+        }
+
+        .section {
+            scroll-margin-top: 85px;
+            margin: 0 0 50px
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 13px
+        }
+
+        .head h2 {
+            margin: 0;
+            font-size: 25px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            padding: 17px;
+            box-shadow: 0 5px 18px #1018280a
+        }
+
+        .metric {
+            font-size: 28px;
+            font-weight: 800
+        }
+
+        .tablewrap {
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 13px
+        }
+
+        .table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: collapse
+        }
+
+        .table th,
+        .table td {
+            padding: 11px 13px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            white-space: nowrap
+        }
+
+        .table th {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #667085;
+            background: #f8fafc
+        }
+
+        .badge {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            background: #eef2ff;
+            color: #3730a3
+        }
+
+        .good {
+            background: #ecfdf3;
+            color: #166534
+        }
+
+        .warn {
+            background: #fffbeb;
+            color: #92400e
+        }
+
+        .danger {
+            background: #fef2f2;
+            color: #991b1b
+        }
+
+        .btn {
+            border: 1px solid var(--line);
+            background: white;
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-weight: 700
+        }
+
+        .primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 20px;
+            background: #eef2f6;
+            overflow: hidden
+        }
+
+        .progress i {
+            height: 100%;
+            display: block;
+            background: linear-gradient(90deg, #2563eb, #7c3aed)
+        }
+
+        .list {
+            display: grid;
+            gap: 9px
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: 11px
+        }
+
+        .auth {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: radial-gradient(circle at top, #dbeafe, #f8fafc 45%, #eef2ff)
+        }
+
+        .authbox {
+            width: min(460px, 100%);
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid var(--line);
+            box-shadow: 0 15px 45px #10182818
+        }
+
+        .form {
+            display: grid;
+            gap: 12px
+        }
+
+        .field label {
+            font-size: 13px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d0d5dd;
+            border-radius: 9px;
+            outline: none
+        }
+
+        .msg {
+            margin: 10px 0
+        }
+
+        .error {
+            padding: 9px;
+            border-radius: 9px;
+            background: #fef3f2;
+            color: #b42318
+        }
+
+        .success {
+            padding: 9px;
+            border-radius: 9px;
+            background: #ecfdf3;
+            color: #166534
+        }
+
+        .toast {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            background: #101828;
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 10px;
+            z-index: 99
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: #0f172a99;
+            display: grid;
+            place-items: center;
+            z-index: 50;
+            padding: 20px
+        }
+
+        .modalbox {
+            background: #fff;
+            border-radius: 17px;
+            padding: 22px;
+            width: min(550px, 100%)
+        }
+
+        .footer {
+            padding: 28px 0;
+            color: var(--muted);
+            border-top: 1px solid var(--line)
+        }
+
+        @media(max-width:1100px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .layout {
+                grid-template-columns: 210px 1fr
+            }
+        }
+
+        @media(max-width:700px) {
+            .layout {
+                display: block
+            }
+
+            .side {
+                position: sticky;
+                top: 63px;
+                height: auto;
+                max-height: 40vh
+            }
+
+            .nav {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .main {
+                padding: 14px
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .search {
+                display: none
+            }
+
+            .uname {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="toast" class="toast hidden"></div>
+    <script>
+        const modules = [{ "name": "Dashboard", "cat": "Core" }, { "name": "Workspace", "cat": "Core" }, { "name": "Projects", "cat": "Core" }, { "name": "Tasks", "cat": "Core" }, { "name": "Calendar", "cat": "Core" }, { "name": "Analytics", "cat": "Core" }, { "name": "Reports", "cat": "Core" }, { "name": "Customers", "cat": "Core" }, { "name": "Orders", "cat": "Core" }, { "name": "Inventory", "cat": "Core" }, { "name": "Products", "cat": "Operations" }, { "name": "Finance", "cat": "Operations" }, { "name": "Invoices", "cat": "Operations" }, { "name": "Payments", "cat": "Operations" }, { "name": "Employees", "cat": "Operations" }, { "name": "Attendance", "cat": "Operations" }, { "name": "Leave", "cat": "Operations" }, { "name": "Recruitment", "cat": "Operations" }, { "name": "Learning", "cat": "Operations" }, { "name": "Documents", "cat": "Operations" }, { "name": "Knowledge", "cat": "Operations" }, { "name": "Support", "cat": "Operations" }, { "name": "Notifications", "cat": "Operations" }, { "name": "Messages", "cat": "Operations" }, { "name": "Team", "cat": "Operations" }, { "name": "Goals", "cat": "Operations" }, { "name": "Roadmap", "cat": "Operations" }, { "name": "Releases", "cat": "Operations" }, { "name": "Quality", "cat": "Operations" }, { "name": "Security", "cat": "Operations" }, { "name": "API", "cat": "Platform" }, { "name": "Integrations", "cat": "Platform" }, { "name": "Automation", "cat": "Platform" }, { "name": "Data", "cat": "Platform" }, { "name": "Import", "cat": "Platform" }, { "name": "Export", "cat": "Platform" }, { "name": "Settings", "cat": "Platform" }, { "name": "Profile", "cat": "Platform" }, { "name": "Activity", "cat": "Platform" }, { "name": "Audit Log", "cat": "Platform" }, { "name": "Help Center", "cat": "Help" }, { "name": "FAQ", "cat": "Help" }, { "name": "Feedback", "cat": "Help" }, { "name": "Roadmap Ideas", "cat": "Help" }, { "name": "Status", "cat": "Help" }, { "name": "Changelog", "cat": "Help" }, { "name": "About", "cat": "Help" }, { "name": "Terms", "cat": "Help" }, { "name": "Privacy", "cat": "Help" }, { "name": "Contact", "cat": "Help" }];
+        const rows = [["1001", "Alpha Workspace", "Operations", "Active", "₹2.40L", "Today"], ["1002", "Beta Commerce", "Sales", "Review", "₹1.85L", "Yesterday"], ["1003", "Gamma Learning", "Product", "Active", "₹98K", "2 days ago"], ["1004", "Delta Support", "Support", "Pending", "₹64K", "3 days ago"], ["1005", "Epsilon Analytics", "Data", "Active", "₹1.12L", "4 days ago"], ["1006", "Zeta Automation", "Engineering", "Review", "₹2.08L", "5 days ago"]];
+        let S = { user: null, view: "Dashboard", q: "", notes: [] };
+        const esc = x => String(x ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+        async function api(u, o = {}) {
+            const options = { ...o, headers: { "Content-Type": "application/json", ...(o.headers || {}) } };
+            let r;
+            try { r = await fetch(u, options) } catch (e) { throw Error("Network error. Check the Flask server.") }
+            const text = await r.text(); let d = {};
+            try { d = text ? JSON.parse(text) : {} } catch (e) { d = { message: "Server returned an invalid response." } }
+            if (!r.ok) throw Error(d.message || ("Request failed (" + r.status + ")"));
+            return d;
+        }
+        function toast(x) { let t = document.getElementById("toast"); t.textContent = x; t.classList.remove("hidden"); setTimeout(() => t.classList.add("hidden"), 2600) }
+        function auth(mode = "login") {
+            document.getElementById("root").innerHTML = `<div class="auth"><div class="authbox"><div style="display:grid;place-items:center"><div class="logo">DSG</div></div><h1 style="text-align:center;margin-bottom:3px">DSG Enterprise</h1><p class="muted" style="text-align:center">Secure 50-module workspace</p><div id="msg" class="msg"></div><form class="form" id="form">${mode === "register" ? `<div class="field"><label>Full name</label><input id="name" required minlength="2" maxlength="80"></div>` : ""}<div class="field"><label>Email</label><input id="email" type="email" required></div><div class="field"><label>Password</label><input id="pw" type="password" minlength="8" maxlength="128" autocomplete="new-password" required></div>${mode === "register" ? `<div class="field"><label>Confirm password</label><input id="cpw" type="password" minlength="8" required></div><small class="muted">8+ characters, uppercase, lowercase and number.</small>` : ""}<button class="btn primary">${mode === "login" ? "Login" : "Create account"}</button></form><div style="text-align:center;margin-top:12px">${mode === "login" ? `New user? <button class="btn" onclick="auth('register')">Register</button>` : `Have an account? <button class="btn" onclick="auth('login')">Login</button>`}</div></div></div>`;
+            document.getElementById("form").onsubmit = async e => { e.preventDefault(); let msg = document.getElementById("msg"), email = document.getElementById("email").value.trim(), pw = document.getElementById("pw").value; try { if (mode === "register") { let name = document.getElementById("name").value.trim(), cp = document.getElementById("cpw").value; if (pw !== cp) throw Error("Passwords do not match."); if (!/[A-Z]/.test(pw) || !/[a-z]/.test(pw) || !/\d/.test(pw)) throw Error("Password must include uppercase, lowercase and number."); S.user = (await api("/api/register", { method: "POST", body: JSON.stringify({ name, email, password: pw }) })).user } else S.user = (await api("/api/login", { method: "POST", body: JSON.stringify({ email, password: pw }) })).user; render(); toast("Authentication successful."); } catch (x) { msg.innerHTML = `<div class="error">${esc(x.message)}</div>` } }
+        }
+        function top() { return `<header class="top"><div class="brand"><div class="logo">DSG</div>DSG Enterprise</div><div class="search"><input value="${esc(S.q)}" placeholder="Search modules and data..." oninput="S.q=this.value;filter()"></div><div class="user"><div class="avatar">${esc((S.user.name || "U")[0].toUpperCase())}</div><span class="uname">${esc(S.user.name)}</span><button class="btn" onclick="logout()">Logout</button></div></header>` }
+        function side() { return `<aside class="side"><small>50 modules</small><nav class="nav">${modules.map((m, i) => `<button class="${S.view === m.name ? "active" : ""}" onclick="go(${i})">${String(i + 1).padStart(2, "0")} · ${esc(m.name)}</button>`).join("")}</nav></aside>` }
+        function badge(s) { return `<span class="badge ${s === "Active" ? "good" : s === "Pending" ? "warn" : s === "Blocked" ? "danger" : ""}">${esc(s)}</span>` }
+        function table() { return `<div class="tablewrap"><table class="table"><thead><tr><th>ID</th><th>Name</th><th>Owner</th><th>Status</th><th>Value</th><th>Updated</th></tr></thead><tbody>${rows.map(r => `<tr>${r.map((x, i) => `<td>${i === 3 ? badge(x) : esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` }
+        function section(m, i) { let p = i === 0 ? `<div class="grid"><div class="card"><div class="muted">Records</div><div class="metric">1,248</div><small>+8.4% this period</small></div><div class="card"><div class="muted">Active</div><div class="metric">864</div><small>69.2% of records</small></div><div class="card"><div class="muted">Open items</div><div class="metric">47</div><small>12 need attention</small></div><div class="card"><div class="muted">Value</div><div class="metric">₹18.6L</div><small>Illustrative KPI</small></div></div>` : ""; return `<section class="section" id="p${i}" data-name="${esc(m.name)}"><div class="head"><div><h2>${i + 1}. ${esc(m.name)}</h2><div class="muted">${esc(m.name)} workspace with operational records, actions, validation and status monitoring.</div></div><span class="badge">${esc(m.cat)}</span></div>${p}<div class="grid" style="margin-top:14px"><div class="card"><h3>Workflow</h3><p class="muted">Use ownership, timestamps, validation and review states for real-world operations.</p><div class="progress"><i style="width:${35 + (i * 7) % 61}%"></i></div><small>${35 + (i * 7) % 61}% completion</small></div><div class="card"><h3>Quick actions</h3><div class="actions"><button class="btn primary" onclick="toast('Create action opened')">Create</button><button class="btn" onclick="toast('Export prepared')">Export</button><button class="btn" onclick="toast('Filters opened')">Filter</button></div></div><div class="card"><h3>Health</h3><p>${badge(i % 9 === 0 ? "Pending" : "Active")} <span class="muted">Sample status</span></p></div><div class="card"><h3>Usage</h3><p class="muted">This module is responsive, scrollable and ready to connect to additional Flask APIs.</p></div></div><div class="card" style="margin-top:14px"><h3>Scrollable data</h3>${table()}</div></section>` }
+        function render() { document.getElementById("root").innerHTML = `${top()}<div class="layout">${side()}<main class="main"><div class="hero"><h1>Welcome, ${esc(S.user.name)}</h1><p>50 scrollable modules · login/registration/logout · SQLite notes · Flask API · responsive frontend · Render ready.</p></div>${modules.map(section).join("")}<section class="section" id="notes"><div class="head"><div><h2>Personal Notes</h2><div class="muted">Private notes for this account.</div></div><button class="btn primary" onclick="noteForm()">+ Add note</button></div><div id="notesList" class="list"></div></section><footer class="footer">DSG Enterprise Workspace · HTML + CSS + JavaScript + Flask only. Runtime SQLite database is generated automatically.</footer></main></div>`; loadNotes() }
+        function go(i) { S.view = modules[i].name; document.querySelectorAll(".nav button").forEach((b, j) => b.classList.toggle("active", j === i)); document.getElementById("p" + i)?.scrollIntoView({ behavior: "smooth" }) }
+        function filter() { let q = S.q.toLowerCase(); document.querySelectorAll(".section").forEach(x => x.style.display = !q || x.textContent.toLowerCase().includes(q) ? "" : "none") }
+        function noteForm() {
+            document.body.insertAdjacentHTML("beforeend", `<div class="modal" id="modal"><div class="modalbox"><div class="head"><h2>New note</h2><button class="btn" onclick="document.getElementById('modal').remove()">Close</button></div><form class="form" id="nf"><div class="field"><label>Title</label><input id="nt" required maxlength="120"></div><div class="field"><label>Body</label><textarea id="nb" rows="7" required maxlength="5000"></textarea></div><button class="btn primary">Save</button></form></div></div>`); document.getElementById("nf").onsubmit = async e => {
+                e.preventDefault();
+                const title = document.getElementById("nt").value.trim();
+                const body = document.getElementById("nb").value.trim();
+                try {
+                    await api("/api/notes", { method: "POST", body: JSON.stringify({ title, body }) });
+                    document.getElementById("modal")?.remove(); loadNotes(); toast("Note saved")
+                }
+                catch (x) { toast(x.message) }
+            }
+        }
+        async function loadNotes() { try { let d = await api("/api/notes"); S.notes = d.notes || []; let x = document.getElementById("notesList"); if (!x) return; x.innerHTML = S.notes.length ? S.notes.map(n => `<div class="item"><div><b>${esc(n.title)}</b><div class="muted">${esc(n.body)}</div></div><button class="btn" onclick="delNote(${n.id})">Delete</button></div>`).join("") : `<div class="card muted">No notes yet.</div>` } catch (e) { } }
+        async function delNote(id) { await api("/api/notes/" + id, { method: "DELETE" }); loadNotes(); toast("Note deleted") }
+        async function logout() { await api("/api/logout", { method: "POST" }); S.user = null; auth("login") }
+        (async () => { try { let d = await api("/api/me"); S.user = d.user || null } catch (e) { } S.user ? render() : auth("login") })();
+    </script>
+</body>
+
+</html>
