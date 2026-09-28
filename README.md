@@ -102,7 +102,7 @@ This creates:
 ```bash
 python app.py
 ```
-Visit **http://localhost:5001**
+Visit **http://localhost:500**
 
 ---
 
