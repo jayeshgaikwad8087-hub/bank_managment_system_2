@@ -1,0 +1,17 @@
+{% extends "layout_dashboard.html" %}
+{% block sidebar_nav %}
+<div class="nav-group">
+  <div class="nav-group-title">Workspace</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'employee.dashboard' }}" href="{{ url_for('employee.dashboard') }}"><span class="nav-icon">🏠</span> Dashboard</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'employee.customer_search' }}" href="{{ url_for('employee.customer_search') }}"><span class="nav-icon">🔎</span> Customer Search</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Verification</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'employee.kyc_verification_list' }}" href="{{ url_for('employee.kyc_verification_list') }}"><span class="nav-icon">🪪</span> KYC Verification</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'employee.loan_review_list' }}" href="{{ url_for('employee.loan_review_list') }}"><span class="nav-icon">💰</span> Loan Review</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Monitoring</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'employee.transaction_monitoring' }}" href="{{ url_for('employee.transaction_monitoring') }}"><span class="nav-icon">📈</span> Transaction Monitoring</a>
+</div>
+{% endblock %}

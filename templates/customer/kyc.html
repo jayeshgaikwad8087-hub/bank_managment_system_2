@@ -1,0 +1,19 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}KYC Verification{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:520px;">
+  <div class="flex-between mb-16">
+    <h3 style="margin:0;">KYC Details</h3>
+    {% if customer.kyc_status == 'verified' %}<span class="badge badge-success">Verified</span>
+    {% elif customer.kyc_status == 'rejected' %}<span class="badge badge-danger">Rejected</span>
+    {% else %}<span class="badge badge-warning">Pending</span>{% endif %}
+  </div>
+  {% if customer.kyc_notes %}<p class="text-muted">Note from bank: {{ customer.kyc_notes }}</p>{% endif %}
+  <form method="POST">
+    <div class="form-group"><label>PAN Number</label><input type="text" name="pan_number" value="{{ customer.pan_number or '' }}" maxlength="10" required></div>
+    <div class="form-group"><label>Aadhaar Number</label><input type="text" name="aadhaar_number" maxlength="12" placeholder="{{ customer.aadhaar_masked or 'XXXXXXXXXXXX' }}" required></div>
+    <div class="form-group"><label>Date of Birth</label><input type="date" name="date_of_birth" value="{{ customer.date_of_birth or '' }}" required></div>
+    <button class="btn btn-primary btn-block" type="submit">Submit for Verification</button>
+  </form>
+</div>
+{% endblock %}

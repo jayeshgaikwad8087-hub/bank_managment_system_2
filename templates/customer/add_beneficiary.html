@@ -1,0 +1,13 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Add Beneficiary{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:460px;">
+  <form method="POST">
+    <div class="form-group"><label>Nickname</label><input type="text" name="nickname" required></div>
+    <div class="form-group"><label>Account Number</label><input type="text" name="account_number" required></div>
+    <div class="form-group"><label>IFSC Code</label><input type="text" name="ifsc_code" required></div>
+    <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name" value="DSG Bank"></div>
+    <button class="btn btn-primary btn-block" type="submit">Add Beneficiary</button>
+  </form>
+</div>
+{% endblock %}

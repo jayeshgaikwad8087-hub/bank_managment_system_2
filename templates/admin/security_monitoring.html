@@ -1,0 +1,32 @@
+{% extends "admin/base_admin.html" %}
+{% block page_title %}Security Monitoring{% endblock %}
+{% block content %}
+<div class="grid grid-2">
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Locked Accounts</h3>
+    {% for u in locked_users %}
+    <div class="flex-between" style="padding:10px 0; border-bottom:1px solid var(--border);">
+      <span>{{ u.full_name }} ({{ u.email }})</span>
+      <span class="badge badge-danger">Locked</span>
+    </div>
+    {% else %}
+    <p class="text-muted">No accounts currently locked.</p>
+    {% endfor %}
+  </div>
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Recent Failed Logins</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Date</th><th>IP</th></tr></thead>
+      <tbody>
+      {% for l in failed_logins %}
+        <tr><td>{{ l.created_at | dtfmt }}</td><td>{{ l.ip_address or 'Unknown' }}</td></tr>
+      {% else %}
+        <tr><td colspan="2" class="text-muted">No failed login attempts recorded.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

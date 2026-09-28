@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Loans{% endblock %}
+{% block content %}
+<section class="container" style="padding:60px 24px; max-width:900px;">
+  <h1 class="fade-up">Loans</h1>
+  <div class="grid grid-2 mt-24">
+    {% for name, rate, desc in [('Personal Loan','12.5% p.a.','Quick funds for personal needs, no collateral required.'),('Education Loan','8.5% p.a.','Fund your higher education with flexible repayment.'),('Home Loan','8.0% p.a.','Low-interest financing for your dream home.'),('Vehicle Loan','9.5% p.a.','Finance your next car or two-wheeler.')] %}
+    <div class="glass-card fade-up">
+      <h3 style="margin-top:0;">{{ name }}</h3>
+      <div class="badge badge-info">{{ rate }}</div>
+      <p class="text-muted mt-8">{{ desc }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  <a class="btn btn-primary mt-24" href="{{ url_for('auth.register') }}">Apply after opening an account</a>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}My Profile{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:640px;">
+  <div class="flex-between">
+    <h3 style="margin-top:0;">Profile Details</h3>
+    <a class="btn btn-outline btn-sm" href="{{ url_for('customer.edit_profile') }}">Edit</a>
+  </div>
+  <table>
+    <tr><td class="text-muted">Full Name</td><td>{{ session.get('full_name') }}</td></tr>
+    <tr><td class="text-muted">Address</td><td>{{ customer.address or '—' }}</td></tr>
+    <tr><td class="text-muted">City / State</td><td>{{ customer.city or '—' }}, {{ customer.state or '—' }}</td></tr>
+    <tr><td class="text-muted">Pincode</td><td>{{ customer.pincode or '—' }}</td></tr>
+    <tr><td class="text-muted">KYC Status</td><td>
+      {% if customer.kyc_status == 'verified' %}<span class="badge badge-success">Verified</span>
+      {% elif customer.kyc_status == 'rejected' %}<span class="badge badge-danger">Rejected</span>
+      {% else %}<span class="badge badge-warning">Pending</span>{% endif %}
+    </td></tr>
+  </table>
+</div>
+{% endblock %}

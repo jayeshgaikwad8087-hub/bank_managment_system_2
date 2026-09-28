@@ -1,0 +1,35 @@
+{% extends "employee/base_employee.html" %}
+{% block page_title %}Loan Review{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Customer</th><th>Type</th><th>Amount</th><th>Tenure</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for l in pending %}
+      <tr>
+        <td>{{ l.customer.user.full_name }}</td>
+        <td style="text-transform:capitalize;">{{ l.loan_type }}</td>
+        <td>₹{{ '%.2f'|format(l.principal_amount) }}</td>
+        <td>{{ l.tenure_months }} mo</td>
+        <td>
+          <form method="POST" action="{{ url_for('employee.review_loan', loan_id=l.id) }}" class="flex gap-8">
+            <input type="hidden" name="decision" value="approve">
+            <input type="text" name="notes" placeholder="Notes" style="width:140px;">
+            <button class="btn btn-accent btn-sm" type="submit">Approve</button>
+          </form>
+          <form method="POST" action="{{ url_for('employee.review_loan', loan_id=l.id) }}" class="mt-8">
+            <input type="hidden" name="decision" value="reject">
+            <input type="hidden" name="notes" value="Does not meet eligibility criteria">
+            <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No pending loan applications.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

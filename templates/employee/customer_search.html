@@ -1,0 +1,21 @@
+{% extends "employee/base_employee.html" %}
+{% block page_title %}Customer Search{% endblock %}
+{% block content %}
+<div class="glass-card fade-up mb-24">
+  <form method="GET" class="flex gap-8">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by name, email or phone">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+</div>
+<div class="grid grid-3">
+  {% for c in results %}
+  <a href="{{ url_for('employee.customer_details', customer_id=c.id) }}" class="glass-card fade-up">
+    <h4 style="margin:0;">{{ c.user.full_name }}</h4>
+    <div class="text-muted" style="font-size:0.85rem;">{{ c.user.email }}</div>
+    <span class="badge {{ 'badge-success' if c.kyc_status=='verified' else 'badge-warning' }} mt-8">{{ c.kyc_status|title }}</span>
+  </a>
+  {% else %}
+  {% if query %}<p class="text-muted">No customers found for "{{ query }}".</p>{% endif %}
+  {% endfor %}
+</div>
+{% endblock %}

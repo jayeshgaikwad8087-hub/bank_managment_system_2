@@ -1,0 +1,16 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Transfer Receipt{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:440px; text-align:center;">
+  <div style="font-size:3rem;">✅</div>
+  <h2 style="margin:8px 0;">Transfer Successful</h2>
+  <div style="font-size:1.6rem; font-weight:800;">₹{{ '%.2f'|format(txn.amount) }}</div>
+  <table class="mt-24" style="text-align:left;">
+    <tr><td class="text-muted">Reference ID</td><td>{{ txn.reference_id }}</td></tr>
+    <tr><td class="text-muted">Date</td><td>{{ txn.created_at | dtfmt }}</td></tr>
+    <tr><td class="text-muted">Remarks</td><td>{{ txn.remarks or '-' }}</td></tr>
+    <tr><td class="text-muted">Status</td><td><span class="badge badge-success">{{ txn.status|title }}</span></td></tr>
+  </table>
+  <a class="btn btn-primary btn-block mt-24" href="{{ url_for('customer.dashboard') }}">Back to Dashboard</a>
+</div>
+{% endblock %}

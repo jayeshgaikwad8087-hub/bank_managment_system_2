@@ -1,0 +1,62 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="grid" style="grid-template-columns:1.3fr 0.7fr; gap:20px;">
+  <div class="balance-hero fade-up">
+    <div style="opacity:0.85; font-size:0.85rem;">Total Balance across {{ accounts|length }} account(s)</div>
+    <div class="balance-value" data-counter="{{ customer.total_balance() }}" data-prefix="₹">₹0</div>
+    <div class="flex gap-20 mt-24">
+      <div><div style="opacity:0.8; font-size:0.78rem;">Recent Income</div><div style="font-weight:700;">₹{{ '%.2f'|format(income) }}</div></div>
+      <div><div style="opacity:0.8; font-size:0.78rem;">Recent Expense</div><div style="font-weight:700;">₹{{ '%.2f'|format(expense) }}</div></div>
+      <div><div style="opacity:0.8; font-size:0.78rem;">Transactions</div><div style="font-weight:700;">{{ txn_count }}</div></div>
+    </div>
+  </div>
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Quick Actions</h3>
+    <div class="grid grid-2 gap-12">
+      <a class="btn btn-outline btn-sm" href="{{ url_for('transaction.deposit') }}">⬇️ Deposit</a>
+      <a class="btn btn-outline btn-sm" href="{{ url_for('transaction.withdraw') }}">⬆️ Withdraw</a>
+      <a class="btn btn-outline btn-sm" href="{{ url_for('transaction.transfer') }}">🔁 Transfer</a>
+      <a class="btn btn-outline btn-sm" href="{{ url_for('loan.emi_calculator') }}">🧮 EMI Calc</a>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-2 mt-24">
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">My Accounts</h3>
+    {% for account in accounts %}
+    <div class="flex-between" style="padding:12px 0; border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-weight:600;">{{ account.account_type|title }} · {{ account.masked_number() }}</div>
+        <div class="text-muted" style="font-size:0.8rem;">{{ account.account_number }}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;">₹{{ '%.2f'|format(account.balance) }}</div>
+        <a href="{{ url_for('account.account_details', account_id=account.id) }}" class="text-muted" style="font-size:0.8rem;">View →</a>
+      </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No accounts yet. <a href="{{ url_for('account.open_account') }}">Open one now</a>.</p>
+    {% endfor %}
+  </div>
+
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Recent Transactions</h3>
+    {% for txn in recent_txns %}
+    <div class="flex-between" style="padding:10px 0; border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-weight:600; text-transform:capitalize;">{{ txn.txn_type.replace('_',' ') }}</div>
+        <div class="text-muted" style="font-size:0.78rem;">{{ txn.created_at | dtfmt }}</div>
+      </div>
+      <div class="{{ 'text-success' if txn.to_account_id in accounts|map(attribute='id')|list else 'text-danger' }}" style="font-weight:700;">
+        ₹{{ '%.2f'|format(txn.amount) }}
+      </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No transactions yet.</p>
+    {% endfor %}
+    <a href="{{ url_for('transaction.history') }}" class="text-muted" style="font-size:0.85rem;">View full history →</a>
+  </div>
+</div>
+{% endblock %}

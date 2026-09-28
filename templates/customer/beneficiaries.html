@@ -1,0 +1,25 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Beneficiaries{% endblock %}
+{% block content %}
+<div class="flex-between mb-16">
+  <h3 style="margin:0;">Beneficiaries</h3>
+  <a class="btn btn-primary btn-sm" href="{{ url_for('account.add_beneficiary') }}">+ Add Beneficiary</a>
+</div>
+<div class="grid grid-3">
+  {% for b in beneficiaries %}
+  <div class="glass-card fade-up">
+    <div class="flex-between">
+      <h4 style="margin:0;">{{ b.nickname }}</h4>
+      {% if b.is_internal %}<span class="badge badge-info">DSG Bank</span>{% else %}<span class="badge badge-muted">External</span>{% endif %}
+    </div>
+    <div class="text-muted mt-8" style="font-size:0.85rem;">{{ b.account_number }}</div>
+    <div class="text-muted" style="font-size:0.8rem;">{{ b.bank_name }} · {{ b.ifsc_code }}</div>
+    <form method="POST" action="{{ url_for('account.delete_beneficiary', beneficiary_id=b.id) }}" data-confirm="Remove this beneficiary?" class="mt-16">
+      <button class="btn btn-outline btn-sm" type="submit">Remove</button>
+    </form>
+  </div>
+  {% else %}
+  <p class="text-muted">No beneficiaries added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

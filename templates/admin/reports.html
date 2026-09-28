@@ -1,0 +1,24 @@
+{% extends "admin/base_admin.html" %}
+{% block page_title %}Reports & Analytics{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <h3 style="margin-top:0;">Monthly Transaction Volume</h3>
+  <canvas id="reportChart" height="90"></canvas>
+</div>
+<script>
+const ctx = document.getElementById('reportChart');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: [{% for m in monthly %}"{{ m.month }}",{% endfor %}],
+    datasets: [{
+      label: 'Transaction Volume (₹)',
+      data: [{% for m in monthly %}{{ m.total }},{% endfor %}],
+      backgroundColor: 'rgba(30,94,255,0.55)',
+      borderRadius: 6
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } } }
+});
+</script>
+{% endblock %}

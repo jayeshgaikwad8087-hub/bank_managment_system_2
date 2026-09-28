@@ -1,0 +1,31 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Loan Status{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:560px;">
+  <div class="flex-between">
+    <h3 style="margin:0; text-transform:capitalize;">{{ loan.loan_type }} Loan</h3>
+    <span class="badge {{ 'badge-success' if loan.status=='active' else ('badge-warning' if loan.status=='pending' else ('badge-danger' if loan.status=='rejected' else 'badge-muted')) }}">{{ loan.status|title }}</span>
+  </div>
+  <table class="mt-16">
+    <tr><td class="text-muted">Principal</td><td>₹{{ '%.2f'|format(loan.principal_amount) }}</td></tr>
+    <tr><td class="text-muted">Interest Rate</td><td>{{ loan.interest_rate }}% p.a.</td></tr>
+    <tr><td class="text-muted">Tenure</td><td>{{ loan.tenure_months }} months</td></tr>
+    <tr><td class="text-muted">EMI</td><td>₹{{ '%.2f'|format(loan.emi_amount) }}</td></tr>
+    <tr><td class="text-muted">EMIs Paid</td><td>{{ loan.emis_paid }} / {{ loan.tenure_months }}</td></tr>
+    <tr><td class="text-muted">Outstanding</td><td>₹{{ '%.2f'|format(loan.outstanding_balance()) }}</td></tr>
+    {% if loan.review_notes %}<tr><td class="text-muted">Bank Notes</td><td>{{ loan.review_notes }}</td></tr>{% endif %}
+  </table>
+
+  {% if loan.status == 'active' %}
+  <form method="POST" action="{{ url_for('loan.pay_emi', loan_id=loan.id) }}" class="mt-24" data-confirm="Pay this month's EMI?">
+    <div class="form-group">
+      <label>Pay From</label>
+      <select name="account_id" required>
+        {% for a in loan.customer.accounts %}<option value="{{ a.id }}">{{ a.masked_number() }} — ₹{{ '%.2f'|format(a.balance) }}</option>{% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Pay EMI (₹{{ '%.2f'|format(loan.emi_amount) }})</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

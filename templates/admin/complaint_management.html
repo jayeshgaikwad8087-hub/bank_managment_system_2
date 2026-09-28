@@ -1,0 +1,28 @@
+{% extends "admin/base_admin.html" %}
+{% block page_title %}Complaint Management{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Ticket</th><th>Subject</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for c in complaints %}
+      <tr>
+        <td>{{ c.ticket_number }}</td>
+        <td>{{ c.subject }}</td>
+        <td><span class="badge {{ 'badge-success' if c.status=='resolved' else 'badge-warning' }}">{{ c.status|replace('_',' ')|title }}</span></td>
+        <td>
+          {% if c.status != 'resolved' %}
+          <form method="POST" action="{{ url_for('admin.resolve_complaint', complaint_id=c.id) }}" class="flex gap-8">
+            <input type="text" name="resolution_notes" placeholder="Resolution notes" style="width:180px;">
+            <button class="btn btn-accent btn-sm" type="submit">Resolve</button>
+          </form>
+          {% else %}<span class="text-muted">{{ c.resolution_notes }}</span>{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

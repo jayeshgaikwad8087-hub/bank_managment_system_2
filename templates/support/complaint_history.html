@@ -1,0 +1,24 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}My Complaints{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Ticket #</th><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for c in complaints %}
+      <tr>
+        <td><a href="{{ url_for('support.complaint_details', complaint_id=c.id) }}">{{ c.ticket_number }}</a></td>
+        <td>{{ c.subject }}</td>
+        <td style="text-transform:capitalize;">{{ c.category }}</td>
+        <td style="text-transform:capitalize;">{{ c.priority }}</td>
+        <td><span class="badge {{ 'badge-success' if c.status=='resolved' else 'badge-warning' }}">{{ c.status|replace('_',' ')|title }}</span></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No complaints raised yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

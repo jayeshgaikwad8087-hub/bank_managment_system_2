@@ -1,0 +1,17 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Notifications{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  {% for n in notifications %}
+  <div class="flex-between" style="padding:14px 0; border-bottom:1px solid var(--border);">
+    <div>
+      <div style="font-weight:600;">{{ n.title }}</div>
+      <div class="text-muted" style="font-size:0.85rem;">{{ n.message }}</div>
+    </div>
+    <div class="text-muted" style="font-size:0.78rem; white-space:nowrap;">{{ n.created_at | dtfmt }}</div>
+  </div>
+  {% else %}
+  <p class="text-muted">No notifications yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

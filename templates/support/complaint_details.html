@@ -1,0 +1,18 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Complaint Details{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:560px;">
+  <div class="flex-between">
+    <h3 style="margin:0;">{{ complaint.ticket_number }}</h3>
+    <span class="badge {{ 'badge-success' if complaint.status=='resolved' else 'badge-warning' }}">{{ complaint.status|replace('_',' ')|title }}</span>
+  </div>
+  <table class="mt-16">
+    <tr><td class="text-muted">Subject</td><td>{{ complaint.subject }}</td></tr>
+    <tr><td class="text-muted">Category</td><td style="text-transform:capitalize;">{{ complaint.category }}</td></tr>
+    <tr><td class="text-muted">Priority</td><td style="text-transform:capitalize;">{{ complaint.priority }}</td></tr>
+    <tr><td class="text-muted">Description</td><td>{{ complaint.description }}</td></tr>
+    <tr><td class="text-muted">Raised On</td><td>{{ complaint.created_at | dtfmt }}</td></tr>
+    {% if complaint.resolution_notes %}<tr><td class="text-muted">Resolution</td><td>{{ complaint.resolution_notes }}</td></tr>{% endif %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Dashboard{% endblock %} — DSG Bank</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+{% include 'partials/_flash.html' %}
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="logo-dot"></span> DSG Bank
+    </div>
+    <nav style="flex:1; overflow-y:auto;">
+      {% block sidebar_nav %}{% endblock %}
+    </nav>
+    <a href="{{ url_for('auth.logout') }}" class="nav-link" style="margin-top:auto;">
+      <span class="nav-icon">⏻</span> Logout
+    </a>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <button class="icon-btn" onclick="toggleSidebar()" style="display:none;" id="mobileMenuBtn">☰</button>
+      <div style="font-weight:700; font-size:1.05rem;">{% block page_title %}Dashboard{% endblock %}</div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
+        <a class="icon-btn" href="{{ url_for('customer.notifications') }}" title="Notifications">
+          🔔
+        </a>
+        <div class="avatar">{{ (session.get('full_name') or 'U')[0] | upper }}</div>
+      </div>
+    </header>
+    <div class="page-body">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

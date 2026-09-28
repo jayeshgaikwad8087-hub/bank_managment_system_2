@@ -1,0 +1,29 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Raise a Complaint{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:480px;">
+  <form method="POST">
+    <div class="form-group">
+      <label>Category</label>
+      <select name="category">
+        <option value="transaction">Transaction</option>
+        <option value="card">Card</option>
+        <option value="loan">Loan</option>
+        <option value="account">Account</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Subject</label><input type="text" name="subject" required></div>
+    <div class="form-group"><label>Description</label><textarea name="description" rows="4" required></textarea></div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select name="priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Submit Complaint</button>
+  </form>
+</div>
+{% endblock %}

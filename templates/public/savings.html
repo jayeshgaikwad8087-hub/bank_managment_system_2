@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Savings Account{% endblock %}
+{% block content %}
+<section class="container" style="padding:60px 24px; max-width:820px;">
+  <h1 class="fade-up">Savings Account</h1>
+  <div class="glass-card fade-up mt-24">
+    <p>Earn up to <strong>3.5% p.a.</strong> interest with zero minimum balance for the first year. Free digital debit card, instant fund transfers and a mobile-friendly dashboard.</p>
+    <ul class="text-muted">
+      <li>Zero minimum balance for year one</li>
+      <li>Free RuPay debit card</li>
+      <li>Instant intra-bank transfers</li>
+      <li>Mobile & web dashboard access</li>
+    </ul>
+    <a class="btn btn-primary mt-16" href="{{ url_for('auth.register') }}">Open Savings Account</a>
+  </div>
+</section>
+{% endblock %}

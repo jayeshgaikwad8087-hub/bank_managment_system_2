@@ -1,0 +1,26 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Loans{% endblock %}
+{% block content %}
+<div class="flex-between mb-16">
+  <h3 style="margin:0;">My Loans</h3>
+  <div class="flex gap-8">
+    <a class="btn btn-outline btn-sm" href="{{ url_for('loan.emi_calculator') }}">🧮 EMI Calculator</a>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('loan.apply_loan') }}">+ Apply for Loan</a>
+  </div>
+</div>
+<div class="grid grid-3">
+  {% for loan in loans %}
+  <div class="glass-card fade-up">
+    <div class="flex-between">
+      <h4 style="margin:0; text-transform:capitalize;">{{ loan.loan_type }} Loan</h4>
+      <span class="badge {{ 'badge-success' if loan.status=='active' else ('badge-warning' if loan.status=='pending' else ('badge-danger' if loan.status=='rejected' else 'badge-muted')) }}">{{ loan.status|title }}</span>
+    </div>
+    <div class="text-muted mt-8">Principal: ₹{{ '%.2f'|format(loan.principal_amount) }}</div>
+    <div class="text-muted">EMI: ₹{{ '%.2f'|format(loan.emi_amount) }} / month</div>
+    <a class="btn btn-outline btn-sm mt-16" href="{{ url_for('loan.loan_status', loan_id=loan.id) }}">View Details</a>
+  </div>
+  {% else %}
+  <p class="text-muted">No loans yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

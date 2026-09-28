@@ -1,0 +1,16 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Open New Account{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:420px;">
+  <form method="POST">
+    <div class="form-group">
+      <label>Account Type</label>
+      <select name="account_type">
+        <option value="savings">Savings Account (3.5% p.a.)</option>
+        <option value="current">Current Account</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Open Account</button>
+  </form>
+</div>
+{% endblock %}

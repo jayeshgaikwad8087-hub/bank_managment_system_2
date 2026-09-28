@@ -1,0 +1,16 @@
+{% extends "admin/base_admin.html" %}
+{% block page_title %}Transaction Management{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for t in txns %}
+      <tr><td>{{ t.created_at | dtfmt }}</td><td style="text-transform:capitalize;">{{ t.txn_type.replace('_',' ') }}</td><td>₹{{ '%.2f'|format(t.amount) }}</td><td>{{ t.status|title }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}EMI Calculator{% endblock %}
+{% block content %}
+<div class="grid grid-2">
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">🧮 EMI Calculator</h3>
+    <form method="POST">
+      <div class="form-group"><label>Loan Amount (₹)</label><input type="number" id="principal" name="principal" min="1000" value="100000" required></div>
+      <div class="form-group"><label>Interest Rate (% p.a.)</label><input type="number" id="rate" name="rate" step="0.1" value="10" required></div>
+      <div class="form-group"><label>Tenure (months)</label><input type="number" id="tenure" name="tenure" min="1" value="24" required></div>
+      <div class="glass-card" style="background:var(--surface-solid); padding:16px;">
+        <div class="text-muted" style="font-size:0.8rem;">Estimated EMI</div>
+        <div id="emiPreview" style="font-size:1.4rem; font-weight:800; color:var(--brand);">₹0</div>
+      </div>
+      <button class="btn btn-primary btn-block mt-16" type="submit">Calculate Exact EMI</button>
+    </form>
+  </div>
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Result</h3>
+    {% if result %}
+    <table>
+      <tr><td class="text-muted">Monthly EMI</td><td style="font-weight:700;">₹{{ result.emi }}</td></tr>
+      <tr><td class="text-muted">Total Payment</td><td>₹{{ result.total_payment }}</td></tr>
+      <tr><td class="text-muted">Total Interest</td><td>₹{{ result.total_interest }}</td></tr>
+    </table>
+    {% else %}
+    <p class="text-muted">Enter loan details and submit to see the exact breakdown.</p>
+    {% endif %}
+  </div>
+</div>
+<script>liveEmiPreview('principal','rate','tenure','emiPreview');</script>
+{% endblock %}

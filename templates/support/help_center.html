@@ -1,0 +1,15 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Help Center{% endblock %}
+{% block content %}
+<div class="grid grid-3">
+  <a href="{{ url_for('support.faq') }}" class="glass-card fade-up">
+    <div style="font-size:1.6rem;">❓</div><h4>FAQs</h4><p class="text-muted" style="font-size:0.85rem;">Answers to common questions.</p>
+  </a>
+  <a href="{{ url_for('support.create_complaint') }}" class="glass-card fade-up">
+    <div style="font-size:1.6rem;">📮</div><h4>Raise a Complaint</h4><p class="text-muted" style="font-size:0.85rem;">Report an issue with your account.</p>
+  </a>
+  <a href="{{ url_for('support.complaint_history') }}" class="glass-card fade-up">
+    <div style="font-size:1.6rem;">🗂️</div><h4>My Complaints</h4><p class="text-muted" style="font-size:0.85rem;">Track the status of your tickets.</p>
+  </a>
+</div>
+{% endblock %}

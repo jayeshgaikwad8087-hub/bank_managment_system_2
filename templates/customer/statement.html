@@ -1,0 +1,28 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Account Statement{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="flex-between mb-16">
+    <h3 style="margin:0;">Statement — {{ account.account_number }}</h3>
+    <button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Date</th><th>Reference</th><th>Type</th><th>Amount</th><th>Balance After</th></tr></thead>
+    <tbody>
+    {% for txn in txns %}
+      <tr>
+        <td>{{ txn.created_at | dtfmt }}</td>
+        <td class="text-muted">{{ txn.reference_id }}</td>
+        <td style="text-transform:capitalize;">{{ txn.txn_type.replace('_',' ') }}</td>
+        <td>₹{{ '%.2f'|format(txn.amount) }}</td>
+        <td>₹{{ '%.2f'|format(txn.balance_after) if txn.balance_after is not none else '-' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No transactions in this period.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

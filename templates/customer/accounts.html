@@ -1,0 +1,21 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}My Accounts{% endblock %}
+{% block content %}
+<div class="flex-between mb-16">
+  <h3 style="margin:0;">Accounts</h3>
+  <a class="btn btn-primary btn-sm" href="{{ url_for('account.open_account') }}">+ Open New Account</a>
+</div>
+<div class="grid grid-3">
+  {% for account in accounts %}
+  <div class="glass-card fade-up">
+    <div class="badge badge-info">{{ account.account_type|title }}</div>
+    <h3 style="margin:10px 0 4px;">₹{{ '%.2f'|format(account.balance) }}</h3>
+    <div class="text-muted" style="font-size:0.85rem;">{{ account.masked_number() }}</div>
+    <div class="text-muted" style="font-size:0.78rem;">IFSC: {{ account.ifsc_code }}</div>
+    <a class="btn btn-outline btn-sm mt-16" href="{{ url_for('account.account_details', account_id=account.id) }}">View Details</a>
+  </div>
+  {% else %}
+  <p class="text-muted">No accounts yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "employee/base_employee.html" %}
+{% block page_title %}KYC Verification{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Customer</th><th>PAN</th><th>Aadhaar</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for c in pending %}
+      <tr>
+        <td>{{ c.user.full_name }}</td>
+        <td>{{ c.pan_number or '-' }}</td>
+        <td>{{ c.aadhaar_masked or '-' }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('employee.review_kyc', customer_id=c.id) }}" class="flex gap-8">
+            <input type="hidden" name="decision" value="approve">
+            <input type="text" name="notes" placeholder="Notes (optional)" style="width:160px;">
+            <button class="btn btn-accent btn-sm" type="submit">Approve</button>
+          </form>
+          <form method="POST" action="{{ url_for('employee.review_kyc', customer_id=c.id) }}" class="mt-8">
+            <input type="hidden" name="decision" value="reject">
+            <input type="hidden" name="notes" value="Documents unclear">
+            <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="text-muted">No pending KYC requests.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

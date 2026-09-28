@@ -1,0 +1,22 @@
+{% extends "layout_dashboard.html" %}
+{% block sidebar_nav %}
+<div class="nav-group">
+  <div class="nav-group-title">Overview</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.dashboard' }}" href="{{ url_for('admin.dashboard') }}"><span class="nav-icon">🏠</span> Dashboard</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.reports' }}" href="{{ url_for('admin.reports') }}"><span class="nav-icon">📊</span> Reports & Analytics</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Management</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.user_management' }}" href="{{ url_for('admin.user_management') }}"><span class="nav-icon">👤</span> User Management</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.create_employee' }}" href="{{ url_for('admin.create_employee') }}"><span class="nav-icon">🧑‍💼</span> Add Employee</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.kyc_management' }}" href="{{ url_for('admin.kyc_management') }}"><span class="nav-icon">🪪</span> KYC Management</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.loan_management' }}" href="{{ url_for('admin.loan_management') }}"><span class="nav-icon">💰</span> Loan Management</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.transaction_management' }}" href="{{ url_for('admin.transaction_management') }}"><span class="nav-icon">💳</span> Transactions</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.complaint_management' }}" href="{{ url_for('admin.complaint_management') }}"><span class="nav-icon">📮</span> Complaints</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Security</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.audit_logs' }}" href="{{ url_for('admin.audit_logs') }}"><span class="nav-icon">🧾</span> Audit Logs</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'admin.security_monitoring' }}" href="{{ url_for('admin.security_monitoring') }}"><span class="nav-icon">🔒</span> Security Monitoring</a>
+</div>
+{% endblock %}

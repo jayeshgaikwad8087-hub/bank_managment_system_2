@@ -1,0 +1,34 @@
+{% extends "layout_dashboard.html" %}
+{% block sidebar_nav %}
+<div class="nav-group">
+  <div class="nav-group-title">Overview</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'customer.dashboard' }}" href="{{ url_for('customer.dashboard') }}"><span class="nav-icon">🏠</span> Dashboard</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'customer.profile' }}" href="{{ url_for('customer.profile') }}"><span class="nav-icon">👤</span> My Profile</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'customer.kyc' }}" href="{{ url_for('customer.kyc') }}"><span class="nav-icon">🪪</span> KYC</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Accounts</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'account.list_accounts' }}" href="{{ url_for('account.list_accounts') }}"><span class="nav-icon">🏦</span> Accounts</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'transaction.history' }}" href="{{ url_for('transaction.history') }}"><span class="nav-icon">📜</span> Transactions</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'account.beneficiaries' }}" href="{{ url_for('account.beneficiaries') }}"><span class="nav-icon">👥</span> Beneficiaries</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Banking</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'transaction.deposit' }}" href="{{ url_for('transaction.deposit') }}"><span class="nav-icon">⬇️</span> Deposit</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'transaction.withdraw' }}" href="{{ url_for('transaction.withdraw') }}"><span class="nav-icon">⬆️</span> Withdraw</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'transaction.transfer' }}" href="{{ url_for('transaction.transfer') }}"><span class="nav-icon">🔁</span> Fund Transfer</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'transaction.bill_payment' }}" href="{{ url_for('transaction.bill_payment') }}"><span class="nav-icon">🧾</span> Bill Payments</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Products</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'card.my_cards' }}" href="{{ url_for('card.my_cards') }}"><span class="nav-icon">💳</span> Cards</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'loan.loan_dashboard' }}" href="{{ url_for('loan.loan_dashboard') }}"><span class="nav-icon">💰</span> Loans</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'loan.emi_calculator' }}" href="{{ url_for('loan.emi_calculator') }}"><span class="nav-icon">🧮</span> EMI Calculator</a>
+</div>
+<div class="nav-group">
+  <div class="nav-group-title">Support</div>
+  <a class="nav-link {{ 'active' if request.endpoint == 'support.help_center' }}" href="{{ url_for('support.help_center') }}"><span class="nav-icon">❓</span> Help Center</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'support.complaint_history' }}" href="{{ url_for('support.complaint_history') }}"><span class="nav-icon">📮</span> Complaints</a>
+  <a class="nav-link {{ 'active' if request.endpoint == 'customer.security_settings' }}" href="{{ url_for('customer.security_settings') }}"><span class="nav-icon">🔒</span> Security</a>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}FAQ{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:700px;">
+  {% for q, a in [
+    ('How do I reset my password?','Use the “Forgot password” link on the login page.'),
+    ('How long does KYC verification take?','Typically 1-2 business days once documents are submitted.'),
+    ('Is there a daily transfer limit?','Yes, ₹2,00,000 per day across all transfers from an account.'),
+    ('How do I block a lost card?','Go to Cards → select the card → Block Card.')
+  ] %}
+  <div style="padding:14px 0; border-bottom:1px solid var(--border);">
+    <div style="font-weight:600;">{{ q }}</div>
+    <div class="text-muted" style="font-size:0.88rem;">{{ a }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

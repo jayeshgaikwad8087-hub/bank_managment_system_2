@@ -1,0 +1,15 @@
+{% extends "employee/base_employee.html" %}
+{% block page_title %}Customer Details{% endblock %}
+{% block content %}
+<div class="glass-card fade-up" style="max-width:640px;">
+  <h3 style="margin-top:0;">{{ customer.user.full_name }}</h3>
+  <table>
+    <tr><td class="text-muted">Email</td><td>{{ customer.user.email }}</td></tr>
+    <tr><td class="text-muted">Phone</td><td>{{ customer.user.phone }}</td></tr>
+    <tr><td class="text-muted">KYC Status</td><td>{{ customer.kyc_status|title }}</td></tr>
+    <tr><td class="text-muted">Total Balance</td><td>₹{{ '%.2f'|format(customer.total_balance()) }}</td></tr>
+    <tr><td class="text-muted">Accounts</td><td>{{ customer.accounts|length }}</td></tr>
+    <tr><td class="text-muted">Loans</td><td>{{ customer.loans|length }}</td></tr>
+  </table>
+</div>
+{% endblock %}

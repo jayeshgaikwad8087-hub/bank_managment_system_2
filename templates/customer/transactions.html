@@ -1,0 +1,24 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Transaction History{% endblock %}
+{% block content %}
+<div class="glass-card fade-up">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Date</th><th>Type</th><th>Remarks</th><th>Amount</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for txn in txns %}
+      <tr>
+        <td>{{ txn.created_at | dtfmt }}</td>
+        <td style="text-transform:capitalize;">{{ txn.txn_type.replace('_',' ') }}</td>
+        <td class="text-muted">{{ txn.remarks or '-' }}</td>
+        <td>₹{{ '%.2f'|format(txn.amount) }}</td>
+        <td><span class="badge badge-success">{{ txn.status|title }}</span></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No transactions yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

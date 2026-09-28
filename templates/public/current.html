@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Current Account{% endblock %}
+{% block content %}
+<section class="container" style="padding:60px 24px; max-width:820px;">
+  <h1 class="fade-up">Current Account</h1>
+  <div class="glass-card fade-up mt-24">
+    <p>Built for businesses and freelancers — unlimited transactions, dedicated relationship support and seamless bill payments.</p>
+    <ul class="text-muted">
+      <li>Unlimited monthly transactions</li>
+      <li>Dedicated relationship manager</li>
+      <li>Business-friendly statements</li>
+    </ul>
+    <a class="btn btn-primary mt-16" href="{{ url_for('auth.register') }}">Open Current Account</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "customer/base_customer.html" %}
+{% block page_title %}Security Settings{% endblock %}
+{% block content %}
+<div class="grid grid-2">
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Change Password</h3>
+    <form method="POST">
+      <div class="form-group"><label>Current Password</label><input type="password" name="current_password" required></div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="pwd" name="new_password" oninput="checkPasswordStrength(this, document.getElementById('bar'), document.getElementById('lbl'))" required>
+        <div class="password-strength"><div class="password-strength-bar" id="bar"></div></div>
+        <div class="input-hint" id="lbl">8+ chars, upper, lower, digit & special character</div>
+      </div>
+      <div class="form-group"><label>Confirm New Password</label><input type="password" name="confirm_password" required></div>
+      <button class="btn btn-primary btn-block" type="submit">Update Password</button>
+    </form>
+  </div>
+  <div class="glass-card fade-up">
+    <h3 style="margin-top:0;">Recent Login Activity</h3>
+    {% for l in login_activity %}
+    <div class="flex-between" style="padding:10px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+      <div>
+        <div>{{ l.ip_address or 'Unknown IP' }}</div>
+        <div class="text-muted" style="font-size:0.78rem;">{{ l.user_agent[:40] if l.user_agent else '' }}</div>
+      </div>
+      <div>
+        {% if l.status == 'success' %}<span class="badge badge-success">Success</span>{% else %}<span class="badge badge-danger">Failed</span>{% endif %}
+      </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No login activity recorded yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

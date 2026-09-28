@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Security{% endblock %}
+{% block content %}
+<section class="container" style="padding:60px 24px; max-width:820px;">
+  <h1 class="fade-up">Security at DSG Bank</h1>
+  <div class="glass-card fade-up mt-24">
+    <ul class="text-muted">
+      <li>Passwords stored using salted hashing — never in plain text</li>
+      <li>Role-based access control for customers, employees and admins</li>
+      <li>Account lockout after repeated failed login attempts</li>
+      <li>Full audit trail for every sensitive action</li>
+      <li>CSRF protection on every form submission</li>
+      <li>Secure, HTTP-only session cookies</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

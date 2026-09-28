@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Open an Account{% endblock %}
+{% block content %}
+<div class="flex-center" style="min-height:85vh; padding:40px 20px;">
+  <div class="glass-card fade-up" style="width:100%; max-width:460px;">
+    <h2 style="margin-top:0;">Open your DSG Bank account</h2>
+    <p class="text-muted" style="margin-top:-8px;">Takes less than 2 minutes.</p>
+    <form method="POST" action="{{ url_for('auth.register') }}">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="full_name" required>
+      </div>
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone" pattern="[0-9]{10}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="pwd" name="password" oninput="checkPasswordStrength(this, document.getElementById('bar'), document.getElementById('lbl'))" required>
+        <div class="password-strength"><div class="password-strength-bar" id="bar"></div></div>
+        <div class="input-hint" id="lbl">8+ chars, upper, lower, digit & special character</div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" required>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+    </form>
+    <p class="text-muted mt-16" style="text-align:center; font-size:0.88rem;">
+      Already have an account? <a href="{{ url_for('auth.login') }}" style="color:var(--brand); font-weight:600;">Log in</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
